@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex Tax Deed Advisors — Lambodeani LLC | Jefferson County, Alabama</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Josefin+Sans:wght@300;400;500;600;700&family=Josefin+Sans:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --vault-black:#0B0C0E;
+    --vault-black-2:#111318;
+    --deed-navy:#16233B;
+    --deed-navy-2:#1C2C48;
+    --county-gold:#C9A227;
+    --county-gold-bright:#E4C34E;
+    --deed-brass:#8C6A3F;
+    --parchment:#F3ECDD;
+    --parchment-dim:#E7DDC5;
+    --ledger-gray:#9BA3AE;
+    --ink:#EDE7D6;
+    --line: rgba(201,162,39,0.28);
+    --radius: 2px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--vault-black);
+    color:var(--ink);
+    font-family:'Josefin Sans', sans-serif;
+    font-weight:300;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  ::selection{ background:var(--county-gold); color:var(--vault-black); }
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block;}
+  .container{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  h1,h2,h3,h4{ font-family:'Cinzel', serif; font-weight:600; letter-spacing:0.02em; color:var(--parchment); }
+  .eyebrow{
+    font-family:'Josefin Sans', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.32em;
+    font-size:11px;
+    color:var(--county-gold);
+    font-weight:500;
+  }
+  .rule{ height:1px; background:linear-gradient(90deg, transparent, var(--line), transparent); width:100%; }
+  .rule-solid{ height:1px; background:var(--line); }
+
+  /* ambient ledger texture */
+  .ledger-bg{
+    position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.05;
+    background-image: repeating-linear-gradient(180deg, var(--county-gold) 0px, var(--county-gold) 1px, transparent 1px, transparent 42px);
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(11,12,14,0.86);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px; max-width:1180px; margin:0 auto;
+  }
+  .brand{ display:flex; align-items:center; gap:14px; }
+  .brand-text{ display:flex; flex-direction:column; line-height:1.1; }
+  .brand-text .name{ font-family:'Cinzel',serif; font-size:15px; letter-spacing:0.08em; color:var(--parchment); }
+  .brand-text .sub{ font-size:9.5px; letter-spacing:0.22em; color:var(--ledger-gray); text-transform:uppercase; margin-top:3px; }
+  .nav-links{ display:flex; gap:36px; align-items:center; }
+  .nav-links a{
+    font-size:12.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ledger-gray);
+    transition:color .25s ease; position:relative; padding:4px 0;
+  }
+  .nav-links a:hover{ color:var(--county-gold); }
+  .nav-cta{
+    border:1px solid var(--county-gold); color:var(--county-gold) !important;
+    padding:9px 20px !important; letter-spacing:0.14em;
+  }
+  .nav-cta:hover{ background:var(--county-gold); color:var(--vault-black) !important; }
+  .burger{ display:none; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; padding:130px 32px 100px; text-align:center;
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,162,39,0.10), transparent 60%),
+      linear-gradient(180deg, var(--vault-black) 0%, var(--vault-black-2) 100%);
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .seal{
+    width:86px; height:86px; margin:0 auto 30px; position:relative;
+  }
+  .hero .eyebrow{ display:block; margin-bottom:22px; }
+  .hero h1{
+    font-size:clamp(34px, 5.4vw, 66px);
+    line-height:1.12;
+    max-width:900px; margin:0 auto 26px;
+  }
+  .hero h1 em{ font-style:normal; color:var(--county-gold); }
+  .hero p.lede{
+    max-width:600px; margin:0 auto 42px; color:var(--ledger-gray); font-size:17px; font-weight:300;
+  }
+  .hero-ctas{ display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
+  .btn{
+    display:inline-block; padding:15px 32px; font-size:12.5px; letter-spacing:0.16em; text-transform:uppercase;
+    border-radius:var(--radius); transition:all .25s ease; font-weight:500; cursor:pointer; border:1px solid transparent;
+  }
+  .btn-gold{ background:var(--county-gold); color:var(--vault-black); }
+  .btn-gold:hover{ background:var(--county-gold-bright); transform:translateY(-1px); }
+  .btn-ghost{ border-color:var(--ledger-gray); color:var(--parchment); }
+  .btn-ghost:hover{ border-color:var(--county-gold); color:var(--county-gold); }
+
+  .hero-stats{
+    display:flex; justify-content:center; gap:0; margin-top:70px; flex-wrap:wrap;
+  }
+  .stat{ padding:0 40px; text-align:center; border-left:1px solid var(--line); }
+  .stat:first-child{ border-left:none; }
+  .stat .num{ font-family:'Cinzel',serif; font-size:30px; color:var(--county-gold); }
+  .stat .label{ font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--ledger-gray); margin-top:8px; }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{ position:relative; z-index:1; padding:110px 0; }
+  .section-head{ text-align:center; max-width:680px; margin:0 auto 64px; }
+  .section-head .eyebrow{ display:block; margin-bottom:16px; }
+  .section-head h2{ font-size:clamp(28px,3.6vw,42px); margin-bottom:18px; }
+  .section-head p{ color:var(--ledger-gray); font-size:15.5px; }
+
+  /* ---------- THREE PATHS ---------- */
+  .paths{ background:var(--vault-black-2); border-bottom:1px solid var(--line); }
+  .path-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line);
+    border:1px solid var(--line);
+  }
+  .path-card{
+    background:var(--vault-black); padding:44px 36px; transition:background .3s ease;
+  }
+  .path-card:hover{ background:var(--vault-black-2); }
+  .path-num{ font-family:'Cinzel',serif; color:var(--deed-brass); font-size:13px; letter-spacing:0.2em; margin-bottom:20px; display:block; }
+  .path-card h3{ font-size:22px; margin-bottom:14px; }
+  .path-card p{ color:var(--ledger-gray); font-size:14.5px; margin-bottom:24px; min-height:96px; }
+  .path-card a.link{ color:var(--county-gold); font-size:12.5px; letter-spacing:0.1em; text-transform:uppercase; border-bottom:1px solid var(--county-gold); padding-bottom:3px; }
+  .path-card a.link:hover{ color:var(--county-gold-bright); border-color:var(--county-gold-bright); }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .process{ }
+  .timeline{ max-width:840px; margin:0 auto; }
+  .tl-item{ display:grid; grid-template-columns:90px 1fr; gap:28px; padding:30px 0; border-top:1px solid var(--line); }
+  .tl-item:last-child{ border-bottom:1px solid var(--line); }
+  .tl-num{ font-family:'Cinzel',serif; font-size:26px; color:var(--county-gold); }
+  .tl-body h4{ font-size:18px; margin-bottom:8px; color:var(--parchment); }
+  .tl-body p{ color:var(--ledger-gray); font-size:14.5px; max-width:560px; }
+
+  /* ---------- PROPOSAL: signature element ---------- */
+  .proposal-wrap{
+    background:
+      radial-gradient(ellipse 700px 400px at 50% 0%, rgba(201,162,39,0.08), transparent 65%),
+      var(--vault-black-2);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .deed-doc{
+    background:var(--parchment);
+    color:#211C10;
+    max-width:900px; margin:0 auto;
+    border:1px solid var(--deed-brass);
+    position:relative;
+    box-shadow:0 40px 90px -30px rgba(0,0,0,0.7), 0 0 0 6px rgba(11,12,14,0.5);
+  }
+  .deed-doc::before{
+    content:""; position:absolute; inset:14px;
+    border:1px solid rgba(140,106,63,0.55); pointer-events:none;
+  }
+  .deed-doc::after{
+    content:""; position:absolute; inset:20px;
+    border:1px solid rgba(140,106,63,0.25); pointer-events:none;
+  }
+  .deed-corner{ position:absolute; width:26px; height:26px; border:2px solid var(--deed-brass); }
+  .deed-corner.tl{ top:6px; left:6px; border-right:none; border-bottom:none; }
+  .deed-corner.tr{ top:6px; right:6px; border-left:none; border-bottom:none; }
+  .deed-corner.bl{ bottom:6px; left:6px; border-right:none; border-top:none; }
+  .deed-corner.br{ bottom:6px; right:6px; border-left:none; border-top:none; }
+
+  .deed-inner{ padding:64px 68px; position:relative; z-index:2; }
+  .deed-seal{
+    position:absolute; top:44px; right:56px;
+    width:104px; height:104px; border-radius:50%;
+    border:2px solid var(--county-gold);
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    transform:rotate(8deg);
+    background:radial-gradient(circle, rgba(201,162,39,0.06), transparent 70%);
+  }
+  .deed-seal span{
+    font-family:'Cinzel',serif; font-size:9.5px; letter-spacing:0.14em; color:var(--deed-brass); text-transform:uppercase; line-height:1.5;
+  }
+  .deed-eyebrow{ font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:var(--deed-brass); font-weight:500; }
+  .deed-title{ font-family:'Cinzel',serif; font-size:clamp(24px,3.4vw,34px); color:#1A1508; margin:16px 0 6px; max-width:520px; line-height:1.25; }
+  .deed-sub{ font-size:14px; color:#5C513C; font-style:italic; margin-bottom:38px; max-width:520px; }
+  .deed-rule{ height:1px; background:rgba(140,106,63,0.4); margin:36px 0; }
+
+  .clause{ display:grid; grid-template-columns:52px 1fr; gap:22px; margin-bottom:34px; }
+  .clause-num{ font-family:'Cinzel',serif; font-size:20px; color:var(--deed-brass); }
+  .clause h4{ font-family:'Cinzel',serif; font-size:16.5px; color:#1A1508; letter-spacing:0.04em; margin-bottom:8px; text-transform:uppercase; }
+  .clause p{ font-size:14.5px; color:#413822; }
+  .clause p + p{ margin-top:8px; }
+  .clause ul{ margin-top:8px; padding-left:18px; }
+  .clause li{ font-size:14.5px; color:#413822; margin-bottom:5px; }
+
+  .deed-figures{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(140,106,63,0.35);
+    border:1px solid rgba(140,106,63,0.35); margin:38px 0 10px;
+  }
+  .fig{ background:#EDE4CC; padding:20px 14px; text-align:center; }
+  .fig .fig-num{ font-family:'Cinzel',serif; font-size:19px; color:#7A5A2E; }
+  .fig .fig-label{ font-size:9.5px; letter-spacing:0.08em; text-transform:uppercase; color:#6B6046; margin-top:6px; }
+
+  .proj-tables{ display:grid; grid-template-columns:1fr 1fr; gap:22px; margin:24px 0; }
+  .proj-table{ border:1px solid rgba(140,106,63,0.35); background:#EFE7D2; }
+  .proj-head{
+    font-family:'Cinzel',serif; font-size:13.5px; letter-spacing:0.08em; text-transform:uppercase;
+    color:#F3ECDD; background:#3C2F17; padding:12px 16px;
+  }
+  .proj-row{ display:flex; justify-content:space-between; font-size:13px; color:#413822; padding:9px 16px; border-top:1px solid rgba(140,106,63,0.22); }
+  .proj-row.proj-sub{ font-weight:600; background:rgba(140,106,63,0.08); }
+  .proj-row.proj-highlight{ background:#C9A227; color:#1A1508; font-weight:700; }
+  .proj-row.proj-highlight span{ color:#1A1508; }
+
+  @media (max-width: 720px){
+    .proj-tables{ grid-template-columns:1fr; }
+    .deed-figures{ grid-template-columns:repeat(2,1fr); }
+  }
+
+  .deed-sign{ display:flex; justify-content:space-between; align-items:flex-end; margin-top:44px; flex-wrap:wrap; gap:24px; }
+  .deed-sign .signee{ border-top:1px solid #8C6A3F; padding-top:8px; min-width:220px; }
+  .deed-sign .signee .role{ font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:#6B6046; }
+  .deed-sign .signee .who{ font-family:'Cinzel',serif; font-size:15px; color:#1A1508; margin-top:4px; }
+
+  .confidential-tag{
+    display:inline-block; margin-top:30px; font-size:10px; letter-spacing:0.2em; text-transform:uppercase;
+    color:#8C6A3F; border:1px solid #8C6A3F; padding:6px 14px;
+  }
+
+  .proposal-cta{ text-align:center; margin-top:56px; }
+  .proposal-cta p{ color:var(--ledger-gray); font-size:14px; margin-bottom:22px; max-width:480px; margin-left:auto; margin-right:auto; }
+  .proposal-hosted{
+    max-width:680px; margin:0 auto 22px; padding:22px 24px; border:1px dashed rgba(201,162,39,0.4);
+    background:rgba(255,255,255,0.04); border-radius:var(--radius); text-align:center;
+  }
+  .proposal-hosted .upload-note{
+    font-size:12px; color:var(--ledger-gray); margin-top:8px;
+  }
+
+  /* ---------- BUYERS / RENTALS DETAIL ---------- */
+  .split{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); }
+  .split-panel{ background:var(--vault-black); padding:56px 48px; }
+  .split-panel .eyebrow{ display:block; margin-bottom:14px; }
+  .split-panel h3{ font-size:26px; margin-bottom:18px; }
+  .split-panel p{ color:var(--ledger-gray); font-size:14.5px; margin-bottom:24px; }
+  .split-panel ul{ list-style:none; margin-bottom:28px; }
+  .split-panel li{ font-size:14px; color:var(--ink); padding:10px 0; border-top:1px solid var(--line); display:flex; gap:12px; }
+  .split-panel li:before{ content:"—"; color:var(--county-gold); }
+
+  /* ---------- TRUST / ENTITY ---------- */
+  .entities{ text-align:center; }
+  .entity-row{ display:flex; justify-content:center; gap:64px; flex-wrap:wrap; margin-top:50px; }
+  .entity{ max-width:260px; }
+  .entity .mark{ font-family:'Cinzel',serif; font-size:12px; letter-spacing:0.18em; color:var(--county-gold); text-transform:uppercase; margin-bottom:10px; }
+  .entity h4{ font-size:19px; margin-bottom:10px; }
+  .entity p{ font-size:13.5px; color:var(--ledger-gray); }
+
+  /* ---------- CONTACT / FORM ---------- */
+  .contact{ background:var(--vault-black-2); border-top:1px solid var(--line); }
+  .contact-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:70px; align-items:start; }
+  .contact-info h2{ font-size:30px; margin-bottom:18px; }
+  .contact-info p{ color:var(--ledger-gray); font-size:14.5px; margin-bottom:28px; max-width:400px; }
+  .contact-detail{ margin-bottom:18px; }
+  .contact-detail .k{ font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--deed-brass); margin-bottom:4px; }
+  .contact-detail .v{ font-size:15px; color:var(--parchment); }
+
+  form{ background:var(--vault-black); border:1px solid var(--line); padding:40px; }
+  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px; }
+  .field{ display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
+  .field label{ font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ledger-gray); }
+  .field input, .field select, .field textarea{
+    background:var(--vault-black-2); border:1px solid var(--line); color:var(--ink);
+    padding:13px 14px; font-family:'Josefin Sans',sans-serif; font-size:14.5px; border-radius:var(--radius);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color:var(--county-gold); }
+  .field textarea{ resize:vertical; min-height:100px; }
+  form .btn{ width:100%; margin-top:8px; text-align:center; border:none; }
+  .form-note{ font-size:11.5px; color:var(--ledger-gray); margin-top:16px; text-align:center; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ padding:56px 0 40px; border-top:1px solid var(--line); }
+  .footer-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px; margin-bottom:36px; }
+  .footer-brand .name{ font-family:'Cinzel',serif; font-size:15px; color:var(--parchment); margin-bottom:8px; }
+  .footer-brand .sub{ font-size:12px; color:var(--ledger-gray); max-width:280px; }
+  .footer-cols{ display:flex; gap:64px; flex-wrap:wrap; }
+  .footer-col .k{ font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--county-gold); margin-bottom:14px; }
+  .footer-col a, .footer-col p{ display:block; font-size:13px; color:var(--ledger-gray); margin-bottom:9px; }
+  .footer-col a:hover{ color:var(--county-gold); }
+  .footer-legal{ font-size:11.5px; color:#6C7078; line-height:1.7; max-width:900px; }
+  .footer-legal p + p{ margin-top:10px; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 860px){
+    .nav-links{ display:none; }
+    .path-grid{ grid-template-columns:1fr; }
+    .split{ grid-template-columns:1fr; }
+    .contact-grid{ grid-template-columns:1fr; }
+    .form-row{ grid-template-columns:1fr; }
+    .deed-inner{ padding:44px 26px; }
+    .deed-seal{ position:static; margin:0 0 24px; transform:rotate(0); }
+    .clause{ grid-template-columns:36px 1fr; gap:14px; }
+    .deed-figures{ grid-template-columns:1fr; }
+    .entity-row{ gap:36px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="ledger-bg"></div>
+
+<header>
+  <nav>
+    <div class="brand">
+      <svg width="38" height="42" viewBox="0 0 38 42" fill="none">
+        <path d="M19 1L36 8V20C36 30 29 38 19 41C9 38 2 30 2 20V8L19 1Z" stroke="#C9A227" stroke-width="1.4"/>
+        <path d="M19 6L31 11V20C31 27.5 26 33.5 19 36C12 33.5 7 27.5 7 20V11L19 6Z" stroke="#8C6A3F" stroke-width="1"/>
+        <text x="19" y="24" text-anchor="middle" font-family="Cinzel, serif" font-size="12" fill="#E4C34E" font-weight="700">TD</text>
+      </svg>
+      <div class="brand-text">
+        <span class="name">APEX TAX DEED ADVISORS</span>
+        <span class="sub">Lambodeani LLC · Jefferson County, AL</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#investors">Investors</a>
+      <a href="#buyers">Buyers</a>
+      <a href="#rentals">Rentals</a>
+      <a href="#proposal">The Proposal</a>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">A Record Held, A Deed Recovered</span>
+    <h1>What the county forgets to collect, <em>we underwrite.</em></h1>
+    <p class="lede">Lambodeani LLC operates Apex Tax Deed Advisors — a Jefferson County, Alabama practice that acquires tax‑distressed property at auction, secures capital through first‑position deeds of trust, and turns delinquency into disciplined return.</p>
+    <div class="hero-ctas">
+      <a href="#proposal" class="btn btn-gold">Request the Investment Proposal</a>
+      <a href="#buyers" class="btn btn-ghost">Browse Available Deeds</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="num">50/50</div><div class="label">Net Profit Split</div></div>
+      <div class="stat"><div class="num">1st</div><div class="label">Position Deed of Trust</div></div>
+      <div class="stat"><div class="num">$5K–$10K</div><div class="label">Typical Acquisition Cost</div></div>
+      <div class="stat"><div class="num">30–115%</div><div class="label">Projected Investor ROI</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="paths" id="paths">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Three Ways In</span>
+      <h2>Invest capital. Buy a deed. Rent a home.</h2>
+      <p>Every parcel that passes through Lambodeani LLC serves one of three people — the partner funding the play, the buyer acquiring the asset outright, or the tenant who eventually lives in it.</p>
+    </div>
+    <div class="path-grid">
+      <div class="path-card" id="investors">
+        <span class="path-num">FOR CAPITAL</span>
+        <h3>Investors</h3>
+        <p>Fund tax deed acquisitions through a 50/50 joint‑venture structure, secured by a first‑position deed of trust on every property. Apex sources, underwrites, and manages; you bring the capital and share the upside.</p>
+        <a href="#proposal" class="link">Read the Proposal →</a>
+      </div>
+      <div class="path-card" id="buyers">
+        <span class="path-num">FOR OWNERSHIP</span>
+        <h3>Buyers</h3>
+        <p>Acquire tax‑distressed Jefferson County property directly — post‑redemption, title‑cleared, and vetted. We handle due diligence, redemption tracking, and closing so you step in with clean paper.</p>
+        <a href="#buyers-detail" class="link">See Available Parcels →</a>
+      </div>
+      <div class="path-card" id="rentals">
+        <span class="path-num">FOR INCOME</span>
+        <h3>Rentals</h3>
+        <p>Move into a Lambodeani‑managed rental home — properties already carried through acquisition, repair, and stabilization, now leased directly with straightforward, well‑documented terms.</p>
+        <a href="#rentals-detail" class="link">View Rental Homes →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">The Mechanism</span>
+      <h2>How a deed moves from auction to asset</h2>
+      <p>The same five‑step process underlies every property Lambodeani LLC touches, whether the outcome is a JV return, a resale, or a lease.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-num">01</div>
+        <div class="tl-body"><h4>Identify</h4><p>Apex sources the property at a Jefferson County tax deed auction and conducts full title and lien research before any bid is placed.</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">02</div>
+        <div class="tl-body"><h4>Acquire</h4><p>The investor funds the back‑tax purchase — typically $5,000 to $10,000 — through escrow, with a first‑position deed of trust recorded in the investor's favor.</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">03</div>
+        <div class="tl-body"><h4>Rehabilitate</h4><p>Apex manages renovation at roughly $35–$45 per square foot, with the investor funding rehab draws through escrow against an agreed scope of work.</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">04</div>
+        <div class="tl-body"><h4>Sell</h4><p>The finished property is listed and sold at fair market value — typically $100,000 to $150,000 in Jefferson County's Birmingham MSA market.</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-num">05</div>
+        <div class="tl-body"><h4>Distribute</h4><p>Escrow pays the investor's capital back first, then all costs, then splits the remaining net profit 50/50 between investor and Lambodeani LLC.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="proposal-wrap" id="proposal">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Exclusive · By Invitation</span>
+      <h2>The Investment Proposal</h2>
+      <p>What follows is the same instrument Apex presents to a qualifying joint‑venture partner — the structure, the security, and the terms, laid out as they would appear in the deed room.</p>
+    </div>
+
+    <div class="deed-doc">
+      <div class="deed-corner tl"></div><div class="deed-corner tr"></div>
+      <div class="deed-corner bl"></div><div class="deed-corner br"></div>
+      <div class="deed-inner">
+        <div class="deed-seal"><span>APEX<br>TAX DEED<br>ADVISORS</span></div>
+        <span class="deed-eyebrow">Confidential · Private Placement Memorandum</span>
+        <h3 class="deed-title">Tax Deed Investment Proposal, Jefferson County, Alabama</h3>
+        <p class="deed-sub">Presented by Lambodeani LLC to a qualifying capital partner. Dated July 9, 2026.</p>
+
+        <div class="deed-figures">
+          <div class="fig"><div class="fig-num">$5K–$10K</div><div class="fig-label">Acquisition Range</div></div>
+          <div class="fig"><div class="fig-num">$35K–$45K</div><div class="fig-label">Rehab Budget</div></div>
+          <div class="fig"><div class="fig-num">$100K–$150K</div><div class="fig-label">Target Sale Price</div></div>
+          <div class="fig"><div class="fig-num">$33.5K–$76.5K</div><div class="fig-label">Projected Net Profit*</div></div>
+        </div>
+        <p style="font-size:11.5px; color:#6B6046; margin-top:-24px; margin-bottom:36px;">*Net profit range after all costs, split equally between investor and Lambodeani LLC.</p>
+
+        <div class="deed-rule"></div>
+
+        <div class="clause">
+          <div class="clause-num">I.</div>
+          <div>
+            <h4>Executive Summary</h4>
+            <p>Lambodeani LLC is seeking a capital partner to co‑invest in a targeted tax deed acquisition strategy in Jefferson County, Alabama. The program identifies residential properties sold at tax deed auction for delinquent back taxes, rehabilitates them to market‑ready condition, and sells them at fair market value — returning the investor's capital first via a first‑position deed of trust, then splitting net profit equally.</p>
+            <p>Jefferson County offers a large, established metro market (Birmingham MSA) with consistent demand for affordable renovated housing, active county tax auctions, and strong resale fundamentals. Lambodeani LLC brings deal sourcing, project management, and disposition expertise; the investor provides acquisition and rehabilitation capital.</p>
+          </div>
+        </div>
+
+        <div class="clause">
+          <div class="clause-num">II.</div>
+          <div>
+            <h4>The Opportunity — Tax Deed Investing</h4>
+            <p>When property owners fail to pay real estate taxes, the county eventually seizes the property and sells it at public auction to recover the delinquent taxes. The winning bidder receives a tax deed — legal conveyance of title — at a price that frequently represents only a fraction of market value.</p>
+            <ul>
+              <li><strong>Low entry cost</strong> — acquisition prices of $5,000–$10,000, representing back taxes owed</li>
+              <li><strong>Clear title process</strong> — all liens researched prior to bidding; known payoffs estimated near $1,000 per property</li>
+              <li><strong>Value creation through rehab</strong> — renovation at $35–$45 per sq ft; ~$35,000–$45,000 for a typical 1,000 sq ft home</li>
+              <li><strong>Strong resale market</strong> — renovated homes achieve $100,000–$150,000, driven by Birmingham MSA demand</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="clause">
+          <div class="clause-num">III.</div>
+          <div>
+            <h4>Deal Structure &amp; Capital Flow</h4>
+            <p>Each investment is a single‑property transaction. The investor funds the full acquisition and rehabilitation costs; Lambodeani LLC manages all operations. Capital is protected by a first‑position deed of trust recorded in Jefferson County.</p>
+            <ul>
+              <li><strong>Identify</strong> — Lambodeani LLC sources the property and researches title &amp; liens</li>
+              <li><strong>Acquire</strong> — investor funds the back‑tax purchase via escrow; deed of trust recorded in investor's favor</li>
+              <li><strong>Rehabilitate</strong> — Lambodeani LLC manages renovation; investor funds draws through escrow</li>
+              <li><strong>Sell</strong> — property listed and sold at fair market value</li>
+              <li><strong>Distribute</strong> — escrow returns investor capital first, pays costs, then splits net profit 50/50</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="clause">
+          <div class="clause-num">IV.</div>
+          <div>
+            <h4>Investor Capital Protection</h4>
+            <p>The investor's full acquisition and rehabilitation capital is secured by a first‑position deed of trust recorded against the subject property in Jefferson County, Alabama. This means the investor's capital is the first obligation repaid from sale proceeds at closing — before any profit distribution — providing a real‑property secured position throughout the hold period.</p>
+          </div>
+        </div>
+
+        <div class="clause">
+          <div class="clause-num">V.</div>
+          <div>
+            <h4>Financial Projections — Per Property</h4>
+            <p>Conservative and optimistic scenarios based on the deal parameters above. All figures are per‑property, projected ranges.</p>
+          </div>
+        </div>
+
+        <div class="proj-tables">
+          <div class="proj-table">
+            <div class="proj-head">Conservative Scenario</div>
+            <div class="proj-row"><span>Back Tax Acquisition</span><span>$10,000</span></div>
+            <div class="proj-row"><span>Rehab (1,000 sq ft)</span><span>$45,000</span></div>
+            <div class="proj-row"><span>Lien Payoff (est.)</span><span>$1,000</span></div>
+            <div class="proj-row proj-sub"><span>Total Invested Capital</span><span>$56,000</span></div>
+            <div class="proj-row"><span>Gross Sale Price</span><span>$100,000</span></div>
+            <div class="proj-row"><span>Commissions &amp; Fees (10%)</span><span>($10,000)</span></div>
+            <div class="proj-row proj-sub"><span>Net Sale Proceeds</span><span>$90,000</span></div>
+            <div class="proj-row"><span>Less: Invested Capital</span><span>($56,000)</span></div>
+            <div class="proj-row proj-sub"><span>Net Profit (Before Split)</span><span>$34,000</span></div>
+            <div class="proj-row"><span>Investor Share (50%)</span><span>$17,000</span></div>
+            <div class="proj-row proj-highlight"><span>Investor Total Return</span><span>$72,000</span></div>
+            <div class="proj-row proj-highlight"><span>Investor ROI</span><span>30.4%</span></div>
+          </div>
+          <div class="proj-table">
+            <div class="proj-head">Optimistic Scenario</div>
+            <div class="proj-row"><span>Back Tax Acquisition</span><span>$5,000</span></div>
+            <div class="proj-row"><span>Rehab (1,000 sq ft)</span><span>$35,000</span></div>
+            <div class="proj-row"><span>Lien Payoff (est.)</span><span>$1,000</span></div>
+            <div class="proj-row proj-sub"><span>Total Invested Capital</span><span>$41,000</span></div>
+            <div class="proj-row"><span>Gross Sale Price</span><span>$150,000</span></div>
+            <div class="proj-row"><span>Commissions &amp; Fees (10%)</span><span>($15,000)</span></div>
+            <div class="proj-row proj-sub"><span>Net Sale Proceeds</span><span>$135,000</span></div>
+            <div class="proj-row"><span>Less: Invested Capital</span><span>($41,000)</span></div>
+            <div class="proj-row proj-sub"><span>Net Profit (Before Split)</span><span>$94,000</span></div>
+            <div class="proj-row"><span>Investor Share (50%)</span><span>$47,000</span></div>
+            <div class="proj-row proj-highlight"><span>Investor Total Return</span><span>$87,000</span></div>
+            <div class="proj-row proj-highlight"><span>Investor ROI</span><span>114.6%</span></div>
+          </div>
+        </div>
+        <p style="font-size:11px; color:#6B6046; margin-top:14px;">ROI calculated on total invested capital (acquisition + rehab). All figures are estimates; actual results may vary based on final sale price, actual rehab costs, and market conditions.</p>
+
+        <div class="deed-rule"></div>
+
+        <div class="clause">
+          <div class="clause-num">VI.</div>
+          <div>
+            <h4>Investor Protections &amp; Risk Mitigation</h4>
+            <ul>
+              <li><strong>1st Position Deed of Trust</strong> — recorded at Jefferson County Probate Court; no other party collects ahead of the investor</li>
+              <li><strong>Escrow‑Controlled Disbursements</strong> — all funds flow through a licensed escrow agent; rehab draws reviewed and staged; sale proceeds follow the agreed waterfall</li>
+              <li><strong>Pre‑Purchase Lien Research</strong> — every property checked for liens, code violations, IRS encumbrances, and HOA assessments before bidding</li>
+              <li><strong>Defined Cost Parameters</strong> — rehab bounded at $35–$45/sq ft with a licensed contractor; scope agreed in writing; cost overruns absorbed by Lambodeani LLC</li>
+              <li><strong>Conservative Underwriting</strong> — sale projections use local comps; Lambodeani LLC targets a minimum $30,000 profit margin before accepting a deal</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="clause">
+          <div class="clause-num">VII.</div>
+          <div>
+            <h4>Next Steps</h4>
+            <ul>
+              <li>Review this proposal and direct any questions to Lambodeani LLC</li>
+              <li>Execute a Joint Venture Agreement or Loan Agreement with deed of trust terms</li>
+              <li>Identify a target property at an upcoming Jefferson County tax deed auction</li>
+              <li>Investor funds acquisition through escrow; first‑position deed recorded</li>
+              <li>Lambodeani LLC commences rehabilitation per agreed scope of work</li>
+              <li>Property is listed, sold, and proceeds distributed per the agreed waterfall</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="deed-sign">
+          <div class="signee">
+            <div class="role">Prepared By</div>
+            <div class="who">Lambodeani LLC · Tax Deed Investment Division</div>
+          </div>
+          <div class="signee">
+            <div class="role">Territory</div>
+            <div class="who">Jefferson County, Alabama Operations</div>
+          </div>
+        </div>
+
+        <span class="confidential-tag">For Qualified Partners Only</span>
+      </div>
+    </div>
+
+    <div class="proposal-hosted">
+      <div class="eyebrow" style="display:block; margin-bottom:8px;">Hosted PDF</div>
+      <div class="upload-note">The proposal PDF is now stored in the project and is available for anyone visiting the site to download directly.</div>
+    </div>
+
+    <div class="proposal-cta">
+      <p>Download the complete private placement memorandum, or reach out directly to schedule a consultation.</p>
+      <div class="hero-ctas" style="margin-top:4px;">
+        <a href="proposal.pdf" target="_blank" rel="noopener" download="proposal.pdf" class="btn btn-gold">Download Full Proposal (PDF)</a>
+        <a href="#contact" class="btn btn-ghost">Schedule a Consultation</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="buyers-detail">
+  <div class="container">
+    <div class="split">
+      <div class="split-panel">
+        <span class="eyebrow">For Buyers</span>
+        <h3>Acquire a cleared deed, not a gamble</h3>
+        <p>Every property Apex offers for direct purchase has already been carried through the redemption period and title review. What you're buying is a documented asset, not raw auction risk.</p>
+        <ul>
+          <li>Title history and redemption status reviewed before listing</li>
+          <li>Straight sale or seller‑financed terms available</li>
+          <li>Full disclosure of the property's tax deed origin</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost">Ask About Current Parcels</a>
+      </div>
+      <div class="split-panel" id="rentals-detail">
+        <span class="eyebrow">For Renters</span>
+        <h3>Move into a stabilized home</h3>
+        <p>Some acquisitions go into the Lambodeani rental portfolio instead of resale — repaired, inspected, and leased directly, with clear terms and responsive management.</p>
+        <ul>
+          <li>Owned and managed directly by Lambodeani LLC</li>
+          <li>Application, lease, and maintenance handled in‑house</li>
+          <li>Jefferson County locations, updated as units become available</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost">Ask About Available Rentals</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="entities">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Who Stands Behind This</span>
+      <h2>One operator, three names</h2>
+      <p>Every deed, JV, and lease traces back to a single operating entity.</p>
+    </div>
+    <div class="entity-row">
+      <div class="entity">
+        <div class="mark">Operating Entity</div>
+        <h4>Lambodeani LLC</h4>
+        <p>Holds title, signs every deed of trust, and carries legal and financial responsibility for each acquisition.</p>
+      </div>
+      <div class="entity">
+        <div class="mark">Advisory Brand</div>
+        <h4>Apex Tax Deed Advisors</h4>
+        <p>Sources parcels, underwrites deals, and manages investor relationships across the JV portfolio.</p>
+      </div>
+      <div class="entity">
+        <div class="mark">Consumer Brand</div>
+        <h4>My Tax Deed</h4>
+        <p>The public‑facing front door for buyers and renters exploring available Jefferson County properties.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <span class="eyebrow">Get In Touch</span>
+        <h2>Start the conversation</h2>
+        <p>Whether you're funding a JV, buying a property outright, or looking for a place to live — tell us which, and Apex will follow up directly.</p>
+        <div class="contact-detail"><div class="k">Territory</div><div class="v">Jefferson County, Alabama</div></div>
+        <div class="contact-detail"><div class="k">Entity</div><div class="v">Lambodeani LLC</div></div>
+        <div class="contact-detail"><div class="k">Advisory Brand</div><div class="v">Apex Tax Deed Advisors</div></div>
+      </div>
+      <form id="inquiry-form" onsubmit="return false;">
+        <div class="form-row">
+          <div class="field"><label for="fname">First Name</label><input id="fname" name="first-name" type="text" required></div>
+          <div class="field"><label for="lname">Last Name</label><input id="lname" name="last-name" type="text" required></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required></div>
+          <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel"></div>
+        </div>
+        <div class="field">
+          <label for="interest">I'm interested as a</label>
+          <select id="interest" name="interest">
+            <option>Investor / JV Partner</option>
+            <option>Buyer</option>
+            <option>Renter</option>
+            <option>Other Inquiry</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell us a bit about what you're looking for..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-gold" id="send-inquiry">Send Inquiry</button>
+        <p class="form-note">Investor inquiries receive the full diligence packet upon qualification.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="name">APEX TAX DEED ADVISORS</div>
+        <div class="sub">A Lambodeani LLC operation, headquartered for Jefferson County, Alabama tax deed acquisition, joint‑venture investment, and rental management.</div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="k">Navigate</div>
+          <a href="#investors">Investors</a>
+          <a href="#buyers">Buyers</a>
+          <a href="#rentals">Rentals</a>
+          <a href="#proposal">The Proposal</a>
+        </div>
+        <div class="footer-col">
+          <div class="k">Entities</div>
+          <p>Lambodeani LLC</p>
+          <p>Apex Tax Deed Advisors</p>
+          <p>My Tax Deed</p>
+        </div>
+        <div class="footer-col">
+          <div class="k"> (909) 660-2853</div>
+          <a href="#contact">Submit an Inquiry</a>
+        </div>
+      </div>
+    </div>
+    <div class="rule-solid"></div>
+    <div class="footer-legal" style="margin-top:28px;">
+      <p>© 2026 Lambodeani LLC, operating as Apex Tax Deed Advisors and My Tax Deed. Jefferson County, Alabama. All rights reserved.</p>
+      <p>This page and the accompanying proposal are provided for informational and discussion purposes only and do not constitute an offer to sell securities or a solicitation of an investment. All financial projections are estimates based on current market conditions and historical data; actual results may differ materially. Investing in tax deed real estate involves risks, including but not limited to market fluctuations, unexpected rehabilitation costs, title defects, and delays in sale. Prospective investors should conduct their own due diligence and consult qualified legal, financial, and tax advisors before making any investment decision. Past performance of similar transactions is not indicative of future results.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const inquiryForm = document.getElementById('inquiry-form');
+  const sendInquiryButton = document.getElementById('send-inquiry');
+  const recipientEmail = 'lambodeanie@gmail.com';
+
+  if (inquiryForm && sendInquiryButton) {
+    sendInquiryButton.addEventListener('click', () => {
+      const firstName = document.getElementById('fname')?.value?.trim() || '';
+      const lastName = document.getElementById('lname')?.value?.trim() || '';
+      const email = document.getElementById('email')?.value?.trim() || '';
+      const phone = document.getElementById('phone')?.value?.trim() || '';
+      const interest = document.getElementById('interest')?.value || '';
+      const message = document.getElementById('message')?.value?.trim() || '';
+
+      const subject = encodeURIComponent(`New inquiry from ${firstName} ${lastName}`.trim());
+      const body = encodeURIComponent(
+        `Name: ${firstName} ${lastName}\n` +
+        `Email: ${email}\n` +
+        `Phone: ${phone}\n` +
+        `Interest: ${interest}\n\n` +
+        `Message:\n${message}`
+      );
+
+      window.location.href = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+    });
+  }
+</script>
+
+</body>
+</html>
